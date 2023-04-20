@@ -49,3 +49,9 @@ def tweet_delete_view(request, id):
     tweet = TweetModel.objects.get(id=id)
     tweet.delete()
     return redirect('/')
+
+
+def mypage_view(request):
+    tweets = TweetModel.objects.filter(
+        user=request.user).order_by('-created_at')
+    return render(request, 'tweet/mypage.html', {"tweets": tweets})

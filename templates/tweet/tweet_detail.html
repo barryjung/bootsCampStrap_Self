@@ -5,19 +5,17 @@
 {% endblock %}
 
 {% block content %}
-<div class="col-md-8">
-    <div class="card mb-3">
-        <div class="card-header">
-            {{ tweet.user }}
-        </div>
-        <div class="card-body">
-            <p class="card-text">{{ tweet.content }}</p>
-        </div>
-        <div class="card-footer text-muted">
-            작성일: {{ tweet.created_at }}
-        </div>
+<div class="card mb-3">
+    <div class="card-header">
+        {{ tweet.user }}
     </div>
-    <a class="btn btn-primary" href="{% url 'tweet_update' tweet.id %}">수정하기</a>
-    <a class="btn btn-primary" href="{% url 'tweet_delete' tweet.id %}">삭제하기</a>
+    <div class="card-body">
+        <p class="card-text">{{ tweet.content }}</p>
+    </div>
+    <div class="card-footer text-muted">
+        작성일: {{ tweet.created_at }}
+    </div>
 </div>
+<a class="btn btn-primary" href="{% url 'tweet_update' tweet.id %}">수정하기</a>
+<a class="btn btn-primary" href="{% url 'tweet_delete' tweet.id %}">삭제하기</a>
 {% endblock %}

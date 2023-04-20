@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import UserForm
-
-# Create your views here.
+from .forms import UserForm, EditProfileForm
 
 
 def signup_view(request):
@@ -13,3 +11,14 @@ def signup_view(request):
         if form.is_valid():
             form.save()
         return redirect('/user/signup/')
+
+
+def edit_profile_view(request):
+    if request.method == "GET":
+        form = EditProfileForm(instance=request.user)
+        return render(request, 'user/edit_profile.html', {"form": form})
+    elif request.method == "POST":
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+        return redirect('/')
