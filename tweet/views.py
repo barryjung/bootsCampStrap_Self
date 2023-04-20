@@ -14,7 +14,7 @@ def tweet_create_view(request):
         form = TweetForm()
         return render(request, 'tweet/tweet_create.html', {"form": form})
     elif request.method == "POST":
-        form = TweetForm(request.POST)
+        form = TweetForm(request.POST, request.FILES)
         if form.is_valid():
             tweet = form.save(commit=False)
             tweet.user = request.user
@@ -36,7 +36,7 @@ def tweet_update_view(request, id):
         form = TweetForm(instance=tweet)
         return render(request, 'tweet/tweet_update.html', {"form": form})
     elif request.method == "POST":
-        form = TweetForm(request.POST, instance=tweet)
+        form = TweetForm(request.POST, request.FILES, instance=tweet)
         if form.is_valid():
             form.save()
         else:

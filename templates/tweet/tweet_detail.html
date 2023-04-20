@@ -10,6 +10,9 @@
         {{ tweet.user }}
     </div>
     <div class="card-body">
+        {% if tweet.image %}
+        <img src="{{ tweet.image.url }}"></a>
+        {% endif %}
         <p class="card-text">{{ tweet.content }}</p>
     </div>
     <div class="card-footer text-muted">

@@ -12,4 +12,4 @@ class UserForm(UserCreationForm):
 class EditProfileForm(UserChangeForm):
     class Meta:
         model = UserModel
-        fields = ['bio']
+        fields = ['bio', 'image']

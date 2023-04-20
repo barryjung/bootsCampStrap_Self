@@ -5,4 +5,4 @@ from .models import TweetModel
 class TweetForm(ModelForm):
     class Meta:
         model = TweetModel
-        fields = ['content']
+        fields = ['image', 'content']

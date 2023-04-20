@@ -11,6 +11,9 @@
         <a href="">{{ tweet.user }}</a>
     </div>
     <div class="card-body">
+        {% if tweet.image %}
+        <a href="{% url 'tweet_detail' tweet.id %}"><img src="{{ tweet.image.url }}"></a>
+        {% endif %}
         <a class="card-text" href="{% url 'tweet_detail' tweet.id %}">{{ tweet.content }}</a>
     </div>
     <div class="card-footer text-muted">

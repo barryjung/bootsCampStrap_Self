@@ -8,6 +8,8 @@ class TweetModel(models.Model):
         db_table = "tweet"
 
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    image = models.ImageField(
+        upload_to="tweet_image/%y/%m/%d", blank=True, null=True)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
