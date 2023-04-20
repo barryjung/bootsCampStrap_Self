@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    피드
+{% endblock %}
+
+{% block content %}
+<div class="col-md-8">
+    {% for tweet in tweets %}
+    <div class="card mb-3">
+        <div class="card-header">
+            {{ tweet.user }}
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ tweet.content }}</p>
+        </div>
+        <div class="card-footer text-muted">
+            작성일: {{ tweet.created_at }}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
