@@ -6,18 +6,18 @@
 
 {% block content %}
 <div class="col-md-8">
-    {% for tweet in tweets %}
     <div class="card mb-3">
         <div class="card-header">
-            <a href="">{{ tweet.user }}</a>
+            {{ tweet.user }}
         </div>
         <div class="card-body">
-            <a class="card-text" href="{% url 'tweet_detail' tweet.id %}">{{ tweet.content }}</a>
+            <p class="card-text">{{ tweet.content }}</p>
         </div>
         <div class="card-footer text-muted">
             작성일: {{ tweet.created_at }}
         </div>
     </div>
-    {% endfor %}
+    <a class="btn btn-primary" href="{% url 'tweet_update' tweet.id %}">수정하기</a>
+    <a class="btn btn-primary" href="{% url 'tweet_delete' tweet.id %}">삭제하기</a>
 </div>
 {% endblock %}
