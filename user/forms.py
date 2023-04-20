@@ -10,6 +10,8 @@ class UserForm(UserCreationForm):
 
 
 class EditProfileForm(UserChangeForm):
+    password = None
+
     class Meta:
         model = UserModel
         fields = ['bio', 'image']

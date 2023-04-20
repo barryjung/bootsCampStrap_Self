@@ -13,3 +13,5 @@ class TweetModel(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    like = models.ManyToManyField(
+        UserModel, blank=True, related_name="like_user")

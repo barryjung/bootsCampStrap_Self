@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    팔로우페이지
+{% endblock %}
+
+{% block content %}
+{% for tweet in tweets %}
+<div class="card mb-3">
+    <div class="card-header">
+        <a href="">{{ tweet.user }}</a>
+    </div>
+    <div class="card-body">
+        {% if tweet.image %}
+        <a href="{% url 'tweet_detail' tweet.id %}"><img src="{{ tweet.image.url }}"></a>
+        {% endif %}
+        <a class="card-text" href="{% url 'tweet_detail' tweet.id %}">{{ tweet.content }}</a>
+    </div>
+    <div class="card-footer text-muted">
+        작성일: {{ tweet.created_at }}
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

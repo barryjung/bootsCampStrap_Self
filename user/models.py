@@ -9,3 +9,5 @@ class UserModel(AbstractUser):
     bio = models.TextField(blank=True)
     image = models.ImageField(upload_to="user_images", blank=True,
                               default="/static/image/150.png")
+    follow = models.ManyToManyField(
+        "self", blank=True, symmetrical=False, related_name="follower")
