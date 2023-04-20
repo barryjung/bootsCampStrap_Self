@@ -14,11 +14,34 @@
         <img src="{{ tweet.image.url }}"></a>
         {% endif %}
         <p class="card-text">{{ tweet.content }}</p>
+        <a class="btn btn-primary btn-sm" href="{% url 'tweet_update' tweet.id %}">수정</a>
+        <a class="btn btn-primary btn-sm" href="{% url 'tweet_delete' tweet.id %}">삭제</a>
     </div>
     <div class="card-footer text-muted">
         작성일: {{ tweet.created_at }}
     </div>
 </div>
-<a class="btn btn-primary" href="{% url 'tweet_update' tweet.id %}">수정하기</a>
-<a class="btn btn-primary" href="{% url 'tweet_delete' tweet.id %}">삭제하기</a>
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">댓글 작성하기</h5>
+        <form method="post" action="{% url 'comment_create' tweet.id %}">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn btn-primary">작성하기</button>
+        </form>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-body">
+        {% for comment in comments %}
+        <h5 class="card-title">{{ comment.user }}</h5>
+        <p class="card-text">{{ comment.content }}</p>
+        {% if comment.user == user %}
+        <a class="btn btn-primary btn-sm" href="{% url 'comment_update' comment.id %}">수정</a>
+        <a class="btn btn-primary btn-sm" href="{% url 'comment_delete' comment.id %}">삭제</a>
+        {% endif %}
+        <hr>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

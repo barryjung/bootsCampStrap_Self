@@ -8,4 +8,10 @@ urlpatterns = [
     path('update/<int:id>', views.tweet_update_view, name="tweet_update"),
     path('delete/<int:id>', views.tweet_delete_view, name="tweet_delete"),
     path('mypage/', views.mypage_view, name="mypage"),
+    path('comment/create/<int:tweet_id>',
+         views.comment_create_view, name="comment_create"),
+    path('comment/update/<int:comment_id>',
+         views.comment_update_view, name="comment_update"),
+    path('comment/delete/<int:comment_id>',
+         views.comment_delete_view, name="comment_delete"),
 ]

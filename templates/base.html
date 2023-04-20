@@ -59,11 +59,11 @@
                     <div class="card-header">
                         팔로우 리스트
                     </div>
-                    {% for follow in user.follow.all %}
                     <div class="card-body">
+                    {% for follow in user.follow.all %}
                         <p class="card-text">{{ follow }}</p>
-                    </div>
                     {% endfor %}
+                    </div>
                 </div>
                 {% endif %}
             </div>
