@@ -25,15 +25,15 @@ def tweet_create_view(request):
         return redirect('/')
 
 
-def tweet_detail_view(request, id):
-    tweet = TweetModel.objects.get(id=id)
+def tweet_detail_view(request, tweet_id):
+    tweet = TweetModel.objects.get(id=tweet_id)
     comments = tweet.commentmodel_set.all().order_by("-created_at")
     form = CommentForm()
     return render(request, 'tweet/tweet_detail.html', {"tweet": tweet, "comments": comments, "form": form})
 
 
-def tweet_update_view(request, id):
-    tweet = TweetModel.objects.get(id=id)
+def tweet_update_view(request, tweet_id):
+    tweet = TweetModel.objects.get(id=tweet_id)
     if request.method == "GET":
         form = TweetForm(instance=tweet)
         return render(request, 'tweet/tweet_update.html', {"form": form})
@@ -47,8 +47,8 @@ def tweet_update_view(request, id):
         return redirect('/')
 
 
-def tweet_delete_view(request, id):
-    tweet = TweetModel.objects.get(id=id)
+def tweet_delete_view(request, tweet_id):
+    tweet = TweetModel.objects.get(id=tweet_id)
     tweet.delete()
     return redirect('/')
 
@@ -57,6 +57,16 @@ def mypage_view(request):
     tweets = TweetModel.objects.filter(
         user=request.user).order_by('-created_at')
     return render(request, 'tweet/mypage.html', {"tweets": tweets})
+
+
+def like_view(request, tweet_id):
+    tweet = TweetModel.objects.get(id=tweet_id)
+    if request.user not in tweet.like.all():
+        tweet.like.add(request.user)
+        return redirect('/')
+    else:
+        tweet.like.remove(request.user)
+        return redirect('/')
 
 
 def comment_create_view(request, tweet_id):

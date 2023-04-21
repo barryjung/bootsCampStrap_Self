@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+<a class="btn btn-primary mb-3" href="{% url 'edit_profile' %}">회원정보 수정하기</a>
 {% for tweet in tweets %}
 <div class="card mb-3">
     <div class="card-header">
@@ -17,9 +18,9 @@
         <a class="card-text" href="{% url 'tweet_detail' tweet.id %}">{{ tweet.content }}</a>
     </div>
     <div class="card-footer text-muted">
+        <a href="{% url 'like' tweet.id %}">좋아요:{{ tweet.like.count }}</a>
         작성일: {{ tweet.created_at }}
     </div>
 </div>
 {% endfor %}
-<a class="btn btn-primary" href="{% url 'edit_profile' %}">회원정보 수정하기</a>
 {% endblock %}

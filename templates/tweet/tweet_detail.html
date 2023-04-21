@@ -7,17 +7,18 @@
 {% block content %}
 <div class="card mb-3">
     <div class="card-header">
-        {{ tweet.user }}
+        <a href="{% url 'follow' tweet.user.id %}">{{ tweet.user }}</a>
     </div>
     <div class="card-body">
         {% if tweet.image %}
         <img src="{{ tweet.image.url }}"></a>
         {% endif %}
         <p class="card-text">{{ tweet.content }}</p>
-        <a class="btn btn-primary btn-sm" href="{% url 'tweet_update' tweet.id %}">수정</a>
-        <a class="btn btn-primary btn-sm" href="{% url 'tweet_delete' tweet.id %}">삭제</a>
     </div>
     <div class="card-footer text-muted">
+        <a href="{% url 'tweet_update' tweet.id %}">수정</a>
+        <a href="{% url 'tweet_delete' tweet.id %}">삭제</a>
+        <a href="{% url 'like' tweet.id %}">좋아요:{{ tweet.like.count }}</a>
         작성일: {{ tweet.created_at }}
     </div>
 </div>
@@ -37,8 +38,8 @@
         <h5 class="card-title">{{ comment.user }}</h5>
         <p class="card-text">{{ comment.content }}</p>
         {% if comment.user == user %}
-        <a class="btn btn-primary btn-sm" href="{% url 'comment_update' comment.id %}">수정</a>
-        <a class="btn btn-primary btn-sm" href="{% url 'comment_delete' comment.id %}">삭제</a>
+        <a href="{% url 'comment_update' comment.id %}">수정</a>
+        <a href="{% url 'comment_delete' comment.id %}">삭제</a>
         {% endif %}
         <hr>
         {% endfor %}
