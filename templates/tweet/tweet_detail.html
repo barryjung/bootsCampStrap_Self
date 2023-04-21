@@ -11,25 +11,17 @@
     </div>
     <div class="card-body">
         {% if tweet.image %}
-        <img src="{{ tweet.image.url }}"></a>
+        <img class="mb-2" src="{{ tweet.image.url }}"></a>
         {% endif %}
         <p class="card-text">{{ tweet.content }}</p>
     </div>
     <div class="card-footer text-muted">
+        {% if tweet.user == user %}
         <a href="{% url 'tweet_update' tweet.id %}">수정</a>
         <a href="{% url 'tweet_delete' tweet.id %}">삭제</a>
+        {% endif %}
         <a href="{% url 'like' tweet.id %}">좋아요:{{ tweet.like.count }}</a>
         작성일: {{ tweet.created_at }}
-    </div>
-</div>
-<div class="card mb-3">
-    <div class="card-body">
-        <h5 class="card-title">댓글 작성하기</h5>
-        <form method="post" action="{% url 'comment_create' tweet.id %}">
-            {% csrf_token %}
-            {{ form }}
-            <button type="submit" class="btn btn-primary">작성하기</button>
-        </form>
     </div>
 </div>
 <div class="card mb-3">
@@ -43,6 +35,16 @@
         {% endif %}
         <hr>
         {% endfor %}
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">댓글 작성하기</h5>
+        <form method="post" action="{% url 'comment_create' tweet.id %}">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn btn-primary">작성하기</button>
+        </form>
     </div>
 </div>
 {% endblock %}

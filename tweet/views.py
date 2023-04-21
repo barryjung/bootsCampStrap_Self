@@ -34,22 +34,24 @@ def tweet_detail_view(request, tweet_id):
 
 def tweet_update_view(request, tweet_id):
     tweet = TweetModel.objects.get(id=tweet_id)
-    if request.method == "GET":
-        form = TweetForm(instance=tweet)
-        return render(request, 'tweet/tweet_update.html', {"form": form})
-    elif request.method == "POST":
-        form = TweetForm(request.POST, request.FILES, instance=tweet)
-        if form.is_valid():
-            form.save()
-        else:
-            form = TweetForm()
+    if request.user == tweet.user:
+        if request.method == "GET":
+            form = TweetForm(instance=tweet)
             return render(request, 'tweet/tweet_update.html', {"form": form})
-        return redirect('/')
+        elif request.method == "POST":
+            form = TweetForm(request.POST, request.FILES, instance=tweet)
+            if form.is_valid():
+                form.save()
+            else:
+                form = TweetForm()
+                return render(request, 'tweet/tweet_update.html', {"form": form})
+    return redirect('/')
 
 
 def tweet_delete_view(request, tweet_id):
     tweet = TweetModel.objects.get(id=tweet_id)
-    tweet.delete()
+    if request.user == tweet.user:
+        tweet.delete()
     return redirect('/')
 
 
@@ -83,21 +85,23 @@ def comment_create_view(request, tweet_id):
 def comment_update_view(request, comment_id):
     comment = CommentModel.objects.get(id=comment_id)
     tweet = comment.tweet
-    if request.method == "GET":
-        form = CommentForm(instance=comment)
-        return render(request, 'tweet/tweet_update.html', {"form": form})
-    elif request.method == "POST":
-        form = CommentForm(request.POST, instance=comment)
-        if form.is_valid():
-            form.save()
-        else:
+    if request.user == comment.user:
+        if request.method == "GET":
             form = CommentForm(instance=comment)
             return render(request, 'tweet/tweet_update.html', {"form": form})
-        return redirect('/tweet/detail/' + str(tweet.id))
+        elif request.method == "POST":
+            form = CommentForm(request.POST, instance=comment)
+            if form.is_valid():
+                form.save()
+            else:
+                form = CommentForm(instance=comment)
+                return render(request, 'tweet/tweet_update.html', {"form": form})
+    return redirect('/tweet/detail/' + str(tweet.id))
 
 
 def comment_delete_view(request, comment_id):
     comment = CommentModel.objects.get(id=comment_id)
     tweet = comment.tweet
-    comment.delete()
+    if request.user == comment.user:
+        comment.delete()
     return redirect('/tweet/detail/'+str(tweet.id))
