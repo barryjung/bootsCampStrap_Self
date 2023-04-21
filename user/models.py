@@ -11,3 +11,7 @@ class UserModel(AbstractUser):
                               default="/static/image/150.png")
     follow = models.ManyToManyField(
         "self", blank=True, symmetrical=False, related_name="follower")
+
+    @property
+    def short_bio(self):
+        return self.bio[:15]

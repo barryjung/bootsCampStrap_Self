@@ -1,6 +1,5 @@
 from django.db import models
 from user.models import UserModel
-# Create your models here.
 
 
 class TweetModel(models.Model):
@@ -16,6 +15,13 @@ class TweetModel(models.Model):
     like = models.ManyToManyField(
         UserModel, blank=True, related_name="like_user")
 
+    @property
+    def short_content(self):
+        return self.content[:15]
+
+    def __str__(self):
+        return self.short_content
+
 
 class CommentModel(models.Model):
     class Meta:
@@ -26,3 +32,10 @@ class CommentModel(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def short_content(self):
+        return self.content[:15]
+
+    def __str__(self):
+        return self.short_content
