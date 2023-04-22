@@ -1,5 +1,7 @@
 from django.db import models
 from user.models import UserModel
+from django.conf import settings
+import os
 
 
 class TweetModel(models.Model):
@@ -21,6 +23,18 @@ class TweetModel(models.Model):
 
     def __str__(self):
         return self.short_content
+
+    def save(self):
+        if self.id is not None:
+            oldimage = self.__class__.objects.get(id=self.id).image
+            if oldimage and oldimage != self.image:
+                os.remove(oldimage.path)
+        super().save()
+
+    def delete(self):
+        if self.image:
+            os.remove(self.image.path)
+        super().delete()
 
 
 class CommentModel(models.Model):
