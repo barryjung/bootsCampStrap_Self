@@ -26,6 +26,7 @@
 </div>
 <div class="card mb-3">
     <div class="card-body">
+        <h5 class="card-title">댓글</h5>
         {% for comment in comments %}
         <h5 class="card-title">{{ comment.user }}</h5>
         <p class="card-text">{{ comment.content }}</p>

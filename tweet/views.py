@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import TweetForm, CommentForm
 from .models import TweetModel, CommentModel
-# Create your views here.
 
 
 def feed_view(request):
@@ -12,7 +11,7 @@ def feed_view(request):
 def tweet_create_view(request):
     if request.method == "GET":
         form = TweetForm()
-        return render(request, 'tweet/tweet_create.html', {"form": form})
+        return render(request, 'formpage.html', {"form": form})
     elif request.method == "POST":
         form = TweetForm(request.POST, request.FILES)
         if form.is_valid():
@@ -21,7 +20,7 @@ def tweet_create_view(request):
             tweet.save()
         else:
             form = TweetForm()
-            return render(request, 'tweet/tweet_create.html', {"form": form})
+            return render(request, 'formpage.html', {"form": form})
         return redirect('/')
 
 
@@ -37,14 +36,14 @@ def tweet_update_view(request, tweet_id):
     if request.user == tweet.user:
         if request.method == "GET":
             form = TweetForm(instance=tweet)
-            return render(request, 'tweet/tweet_update.html', {"form": form})
+            return render(request, 'formpage.html', {"form": form})
         elif request.method == "POST":
             form = TweetForm(request.POST, request.FILES, instance=tweet)
             if form.is_valid():
                 form.save()
             else:
                 form = TweetForm()
-                return render(request, 'tweet/tweet_update.html', {"form": form})
+                return render(request, 'formpage.html', {"form": form})
     return redirect('/')
 
 
@@ -88,14 +87,14 @@ def comment_update_view(request, comment_id):
     if request.user == comment.user:
         if request.method == "GET":
             form = CommentForm(instance=comment)
-            return render(request, 'tweet/tweet_update.html', {"form": form})
+            return render(request, 'formpage.html', {"form": form})
         elif request.method == "POST":
             form = CommentForm(request.POST, instance=comment)
             if form.is_valid():
                 form.save()
             else:
                 form = CommentForm(instance=comment)
-                return render(request, 'tweet/tweet_update.html', {"form": form})
+                return render(request, 'formpage.html', {"form": form})
     return redirect('/tweet/detail/' + str(tweet.id))
 
 

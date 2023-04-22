@@ -7,7 +7,7 @@ from tweet.models import TweetModel
 def signup_view(request):
     if request.method == "GET":
         form = UserForm()
-        return render(request, 'user/signup.html', {"form": form})
+        return render(request, 'formpage.html', {"form": form})
     elif request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():
@@ -18,7 +18,7 @@ def signup_view(request):
 def edit_profile_view(request):
     if request.method == "GET":
         form = EditProfileForm()
-        return render(request, 'user/edit_profile.html', {"form": form})
+        return render(request, 'formpage.html', {"form": form})
     elif request.method == "POST":
         user = UserModel.objects.get(id=request.user.id)
         form = EditProfileForm(request.POST, request.FILES)
@@ -32,7 +32,7 @@ def edit_profile_view(request):
 def follow_view(request, user_id):
     target_user = UserModel.objects.get(id=user_id)
     follow_users = request.user.follow.all()
-    if request.user is not target_user:
+    if request.user != target_user:
         if target_user in follow_users:
             request.user.follow.remove(target_user)
         else:
